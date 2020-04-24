@@ -1,7 +1,3 @@
-//
-// Created by a-cherepkov on 4/18/20.
-//
-
 #ifndef GAME_ENEMY_CONTROLLER_H
 #define GAME_ENEMY_CONTROLLER_H
 
@@ -14,7 +10,7 @@
 #include "collider.hpp"
 
 struct EnemyController {
-    const static size_t _BUFFER_DATA_POINTS_PER_ENEMY = 108;
+    const static size_t _BUFFER_DATA_POINTS_PER_ENEMY = 72;
 
     std::vector<GLfloat> _vertices_buffer_data;
     std::vector<GLfloat> _colors_buffer_data;

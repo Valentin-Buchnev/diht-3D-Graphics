@@ -9,14 +9,16 @@ EnemyController::EnemyController() {
         "enemy.fragmentshader");
 
     _MVP_matrix_ID = glGetUniformLocation(_program_ID, "MVP");
+
+    glGenBuffers(1, &_vertices_buffer);
+    glGenBuffers(1, &_colors_buffer);
 }
 
 void EnemyController::_send_vertices_data_to_buffer() {
 
-    glGenBuffers(1, &_vertices_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertices_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _vertices_buffer_data.size(), _vertices_buffer_data.data(), GL_DYNAMIC_DRAW);
-    glGenBuffers(1, &_colors_buffer);
+    
     glBindBuffer(GL_ARRAY_BUFFER, _colors_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _colors_buffer_data.size(), _colors_buffer_data.data(), GL_DYNAMIC_DRAW);
 
@@ -24,42 +26,37 @@ void EnemyController::_send_vertices_data_to_buffer() {
 
 uint32_t EnemyController::spawn_new_enemy(float x_shift, float y_shift, float z_shift) {
     static const std::vector<GLfloat> enemy_surfaces = {
-        -1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, 
-        1.0f, 1.0f,-1.0f, 
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.5f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+
+        1.0f, 0.0f, 0.0f,
+        0.0f, -1.5f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+
+        -1.0f, 0.0f, 0.0f,
+        0.0f, 1.5f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+
+        -1.0f, 0.0f, 0.0f,
+        0.0f, -1.5f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.5f, 0.0f,
+        0.0f, 0.0f, -1.0f,
+
+        1.0f, 0.0f, 0.0f,
+        0.0f, -1.5f, 0.0f,
+        0.0f, 0.0f, -1.0f,
+
+        -1.0f, 0.0f, 0.0f,
+        0.0f, 1.5f, 0.0f,
+        0.0f, 0.0f, -1.0f,
+
+        -1.0f, 0.0f, 0.0f,
+        0.0f, -1.5f, 0.0f,
+        0.0f, 0.0f, -1.0f,
     };
 
     srand(time(NULL));

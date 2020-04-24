@@ -75,7 +75,7 @@ void FireballController::spawn_fireball(bool respawn = false) {
     if (!_is_spawned) {
         _is_spawned = true;
         _start_position = getPosition();
-        _velocity = getDirection();
+        _velocity = getDirection() * 5.0f;
         _time_from_last_spawn = 0;
     }
 
@@ -117,7 +117,7 @@ void FireballController::spawn_fireball(bool respawn = false) {
     _send_vertices_data_to_buffer();
 
     _time_from_last_spawn += 0.01;
-    if (_time_from_last_spawn > 10) {
+    if (_time_from_last_spawn > 3) {
         _is_spawned = false; 
         glDeleteBuffers(1, &_vertices_buffer);
     }

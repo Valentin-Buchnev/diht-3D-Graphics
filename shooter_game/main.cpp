@@ -1,4 +1,4 @@
-// Include standard headers
+ï»¿// Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
 #include <random>
@@ -72,7 +72,7 @@ int initialize_window() {
 	glDepthFunc(GL_LESS);
 
 	// Cull triangles which normal is not towards the camera
-	glEnable(GL_CULL_FACE);
+	// glEnable(GL_CULL_FACE);
 }
 
 int main(void)
@@ -101,7 +101,7 @@ int main(void)
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Âû÷èñëèòü MVP-ìàòðèöó â çàâèñèìîñòè îò ïîëîæåíèÿ ìûøè è íàæàòûõ êëàâèø
+		// Ð’Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ MVP-Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñƒ Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð¼Ñ‹ÑˆÐ¸ Ð¸ Ð½Ð°Ð¶Ð°Ñ‚Ñ‹Ñ… ÐºÐ»Ð°Ð²Ð¸Ñˆ
 		computeMatricesFromInputs();
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
@@ -111,12 +111,9 @@ int main(void)
 
 		fireballController.spawn_fireball((glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS));
 
-		if (time(NULL) - last_time_enemy_spawned > 5) {
+		if (time(NULL) - last_time_enemy_spawned > 1) {
 			glm::vec3 center = getPosition() + getDirection() * (float)7. + glm::vec3((rand() % 5) / 5., (rand() % 5) / 5., (rand() % 5) / 5.);
 			last_enemy_ix = enemyController.spawn_new_enemy(center.x, center.y, center.z);
-			if (last_enemy_ix >= 10) {
-				enemyController.kill_enemy(last_enemy_ix - 10);
-			}
 			printf("enemy spawned at %.2f %.2f %.2f ", center.x, center.y, center.z);
 			glm::vec3 color;
 			size_t sz = enemyController._colors_buffer_data.size();
