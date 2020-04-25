@@ -41,6 +41,8 @@ struct EnemyController {
     void kill_enemy(uint32_t enemy_ix);
 
     void draw();
+
+    static void rotate(GLfloat& x, GLfloat& y, float theta);
 };
 
 #endif //GAME_ENEMY_CONTROLLER_H

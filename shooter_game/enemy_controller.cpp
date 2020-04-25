@@ -63,10 +63,24 @@ uint32_t EnemyController::spawn_new_enemy(float x_shift, float y_shift, float z_
 
     glm::vec3 color = glm::vec3((rand() % 1000) / 1000., (rand() % 1000) / 1000., (rand() % 1000) / 1000.);
 
+    float theta0 = (rand() % 3140) / 1000.0f;
+    float theta1 = (rand() % 3140) / 1000.0f;
     for (size_t surface_begin_ix = 0; surface_begin_ix < enemy_surfaces.size(); surface_begin_ix += 3) {
-        _vertices_buffer_data.push_back(enemy_surfaces[surface_begin_ix + 0] + x_shift);
-        _vertices_buffer_data.push_back(enemy_surfaces[surface_begin_ix + 1] + y_shift);
-        _vertices_buffer_data.push_back(enemy_surfaces[surface_begin_ix + 2] + z_shift);
+        GLfloat x, y, z;
+        x = enemy_surfaces[surface_begin_ix + 0];
+        y = enemy_surfaces[surface_begin_ix + 1];
+        z = enemy_surfaces[surface_begin_ix + 2];
+
+        rotate(x, y, theta0);
+        rotate(x, z, theta1);
+
+        x += x_shift;
+        y += y_shift;
+        z += z_shift;
+
+        _vertices_buffer_data.push_back(x);
+        _vertices_buffer_data.push_back(y);
+        _vertices_buffer_data.push_back(z);
 
         _colors_buffer_data.push_back(color.x);
         _colors_buffer_data.push_back(color.y);
@@ -76,7 +90,7 @@ uint32_t EnemyController::spawn_new_enemy(float x_shift, float y_shift, float z_
     _send_vertices_data_to_buffer();
 
     _enemies_ixes.push_back(last_used_ix++);
-    _colliders.emplace_back(0.0 + x_shift, 0.0 + y_shift, 0.0 + z_shift, 1.414);
+    _colliders.emplace_back(0.0 + x_shift, 0.0 + y_shift, 0.0 + z_shift, 1.0);
     return _enemies_ixes.back();
 }
 
@@ -164,4 +178,12 @@ EnemyController::~EnemyController() {
     glDeleteBuffers(1, &_vertices_buffer);
     glDeleteBuffers(1, &_colors_buffer);
     glDeleteProgram(_program_ID);
+}
+
+void EnemyController::rotate(GLfloat& x, GLfloat& y, float theta) {
+    GLfloat old_x = x;
+    GLfloat old_y = y;
+
+    x = old_x * cosf(theta) - old_y * sinf(theta);
+    y = old_x * sinf(theta) + old_y * cosf(theta);
 }
