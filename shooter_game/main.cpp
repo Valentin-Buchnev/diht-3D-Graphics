@@ -112,7 +112,10 @@ int main(void)
 		fireballController.spawn_fireball((glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS));
 
 		if (time(NULL) - last_time_enemy_spawned > 1) {
-			glm::vec3 center = getPosition() + getDirection() * (float)7. + glm::vec3((rand() % 5) / 5., (rand() % 5) / 5., (rand() % 5) / 5.);
+			glm::vec3 center = getPosition() + glm::vec3(
+			        ((rand() % 60) / 10 + 5) * (rand() % 2 ? 1 : -1),
+                    ((rand() % 25) / 10),
+                    ((rand() % 60) / 10 + 5) * (rand() % 2 ? 1 : -1));
 			last_enemy_ix = enemyController.spawn_new_enemy(center.x, center.y, center.z);
 			printf("enemy spawned at %.2f %.2f %.2f ", center.x, center.y, center.z);
 			glm::vec3 color;
